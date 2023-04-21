@@ -18,7 +18,6 @@
 
 // static object pointer
 static NSSpeechSynthesizer *synth = NULL;
-const char* pszVoiceAlex = "com.apple.speech.synthesis.voice.Alex";
 
 ////////////////////////////////////////////////
 //
@@ -26,14 +25,13 @@ const char* pszVoiceAlex = "com.apple.speech.synthesis.voice.Alex";
 // Only single speaker possible, but
 // offering a simple c-interface
 //
-void init_speaker()
+void init_speaker(void)
 {
     synth =[[NSSpeechSynthesizer alloc] initWithVoice:
-            [[NSString alloc] initWithCString:"com.apple.speech.synthesis.voice.anna"
-                                     encoding: NSASCIIStringEncoding]];
+            [NSSpeechSynthesizer defaultVoice]];
 }
 
-void speak(char* text)
+void speak(const char* text)
 {
     [synth startSpeakingString:[[NSString alloc] initWithCString:text encoding: NSASCIIStringEncoding]];
 }
@@ -67,6 +65,31 @@ void get_voice_name(unsigned int i, char* pszOut)
     strcpy(pszOut, pszConst);
 }
 
+void set_rate(float rate)
+{
+    [synth setRate:rate];
+}
+
+float get_rate(void)
+{
+    return [synth rate];
+}
+
+void set_volume(float volume)
+{
+    [synth setVolume:volume];
+}
+
+float get_volume(void)
+{
+    return [synth volume];
+}
+
+void stop(void)
+{
+    [synth stopSpeaking];
+}
+
 void cleanup_speaker(void)
 {
     synth = NULL;
@@ -78,22 +101,47 @@ void cleanup_speaker(void)
 // This is useful for handling different speakers
 // at once
 //
-void* make_speaker()
+void* make_speaker(void)
 {
     Speaker* speaker = [[Speaker alloc] init];
     return (__bridge_retained void*)speaker;
 }
 
-void speak_with(void* speaker, char* text)
+void speak_with(void* speaker, const char* text)
 {
     [((__bridge Speaker*)speaker) speakWithText:[[NSString alloc] initWithCString:text
-                                                                         encoding: NSASCIIStringEncoding]];
+                                                                         encoding: NSUTF8StringEncoding]];
 }
 
 void set_voice_with(void* speaker, int index)
 {
     NSString *voiceID =[[NSSpeechSynthesizer availableVoices] objectAtIndex:index];
     [[((__bridge Speaker*)speaker) synth] setVoice:voiceID];
+}
+
+void set_rate_with(void* speaker, float rate)
+{
+    [[((__bridge Speaker*)speaker) synth] setRate:rate];
+}
+
+float get_rate_with(void* speaker)
+{
+    return [[((__bridge Speaker*)speaker) synth] rate];
+}
+
+void set_volume_with(void* speaker, float volume)
+{
+    [[((__bridge Speaker*)speaker) synth] setVolume:volume];
+}
+
+float get_volume_with(void* speaker)
+{
+    return [[((__bridge Speaker*)speaker) synth] volume];
+}
+
+void stop_with(void* speaker)
+{
+    [[((__bridge Speaker*)speaker) synth] stopSpeaking];
 }
 
 bool is_speaking(void* speaker)

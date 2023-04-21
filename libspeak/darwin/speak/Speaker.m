@@ -23,13 +23,12 @@
     if (self) {
         // create speech-synth
         _synth = [[NSSpeechSynthesizer alloc] initWithVoice:
-                    [[NSString alloc] initWithCString:"com.apple.speech.synthesis.voice.anna"
-                                             encoding: NSASCIIStringEncoding]];
+                  [NSSpeechSynthesizer defaultVoice]];
             
         //synth is an ivar
         [_synth setDelegate:self];
         
-        _voiceid = 6;
+        _voiceid = 0;
     }
     return self;
 }

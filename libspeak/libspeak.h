@@ -44,13 +44,18 @@ extern "C"
     ///////////
     // Speaker
     //
-    LIBRARY_EXPORT void init_speaker();
-    LIBRARY_EXPORT void speak(char* text);
+    LIBRARY_EXPORT void init_speaker(void);
+    LIBRARY_EXPORT void speak(const char* text);
     LIBRARY_EXPORT void set_voice(int index);
     LIBRARY_EXPORT unsigned int available_voices_count(void);
     LIBRARY_EXPORT void set_language(int index);
     LIBRARY_EXPORT unsigned int available_languages_count(void);
     LIBRARY_EXPORT void get_voice_name(unsigned int idx, char* pszOut);
+    LIBRARY_EXPORT void set_volume(float volume);
+    LIBRARY_EXPORT float get_volume();
+    LIBRARY_EXPORT void set_rate(float rate);
+    LIBRARY_EXPORT float get_rate();
+    LIBRARY_EXPORT void stop();
     LIBRARY_EXPORT void cleanup_speaker(void);
     LIBRARY_EXPORT void mainloop_speaker(void* speaker);
     LIBRARY_EXPORT bool is_speaking(void* speaker);
@@ -58,9 +63,14 @@ extern "C"
     ///////////////
     // Speaker OO
     //
-    LIBRARY_EXPORT void* make_speaker();
-    LIBRARY_EXPORT void speak_with(void* speaker, char* text);
+    LIBRARY_EXPORT void* make_speaker(void);
+    LIBRARY_EXPORT void speak_with(void* speaker, const char* text);
     LIBRARY_EXPORT void set_voice_with(void* speaker, int index);
+    LIBRARY_EXPORT void set_volume_with(void* speaker, float volume);
+    LIBRARY_EXPORT float get_volume_with(void* speaker);
+    LIBRARY_EXPORT void set_rate_with(void* speaker, float rate);
+    LIBRARY_EXPORT float get_rate_with(void* speaker);
+    LIBRARY_EXPORT void stop_with(void* speaker);
     LIBRARY_EXPORT void cleanup_with(void* speaker);
     
     LIBRARY_EXPORT void register_will_speak_word_callback(void* speaker, wsw_callback cb);
@@ -70,7 +80,7 @@ extern "C"
     /////////////////
     // Recognizer OO
     //
-    LIBRARY_EXPORT void* make_listener();
+    LIBRARY_EXPORT void* make_listener(void);
     LIBRARY_EXPORT void start_listening(void* listener);
     LIBRARY_EXPORT void stop_listening(void* listener);
     LIBRARY_EXPORT void add_command(void* listener, char*);
