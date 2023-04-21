@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>testspeak.xcscheme</key>
+		<key>speak.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,7 +12,12 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>8794C9C81C49317D002185B0</key>
+		<key>87A16ADD1C48D4FA002324E7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>87A16AE81C48D4FA002324E7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
